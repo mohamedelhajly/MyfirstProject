@@ -25,7 +25,7 @@ public class EtudiantService {
 
     private final EtudiantMapper etudiantMapper;
 
-    private final PaginatedResponseMapper paginatedResponseMapper;
+    //private final PaginatedResponseMapper paginatedResponseMapper;
 
     /*public Etudiant AddEtudiant(Etudiant etudiant){
         Etudiant etudiantDTO = etudiantRepository.save(etudiant);
@@ -119,9 +119,14 @@ public class EtudiantService {
         } else {
             etudiants = etudiantRepository.findAll(pageable2).map(etudiant -> etudiantMapper.mapToDto(etudiant));
         }
-        PaginatedResponse<EtudiantDto> response = PaginatedResponse.builder()
+
+        PaginatedResponse<EtudiantDto> response = PaginatedResponse.<EtudiantDto>builder()
                 .content(etudiants.getContent())
                 .last(etudiants.isLast())
+                .pageNo(etudiants.getNumber())
+                .pageSize(etudiants.getSize())
+                .totalElements(etudiants.getTotalElements())
+                .totalPages(etudiants.getTotalPages())
                 .build();
         return response;
     }
